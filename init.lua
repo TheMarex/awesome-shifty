@@ -58,7 +58,7 @@ local matchp = ""
 local index_cache = {}
 for i = 1, capi.screen.count() do index_cache[i] = {} end
 
---name2tags: matches string 'name' to tag objects
+--- name2tags: matches string 'name' to tag objects
 -- @param name : tag name to find
 -- @param scr : screen to look for tags on
 -- @return table of tag objects or nil
@@ -80,7 +80,7 @@ function name2tag(name, scr, idx)
     if ts then return ts[idx or 1] end
 end
 
---tag2index: finds index of a tag object
+--- tag2index: finds index of a tag object
 -- @param scr : screen number to look for tag on
 -- @param tag : the tag object to find
 -- @return the index [or zero] or end of the list
@@ -90,7 +90,7 @@ function tag2index(scr, tag)
     end
 end
 
---rename
+--- rename
 --@param tag: tag object to be renamed
 --@param prefix: if any prefix is to be added
 --@param no_selectall:
@@ -132,7 +132,7 @@ function rename(tag, prefix, no_selectall)
         )
 end
 
---send: moves client to tag[idx]
+--- send: moves client to tag[idx]
 -- maybe this isn't needed here in shifty?
 -- @param idx the tag number to send a client to
 function send(idx)
@@ -148,7 +148,7 @@ end
 function send_next() send(1) end
 function send_prev() send(-1) end
 
---pos2idx: translate shifty position to tag index
+--- pos2idx: translate shifty position to tag index
 --@param pos: position (an integer)
 --@param scr: screen number
 function pos2idx(pos, scr)
@@ -166,7 +166,7 @@ function pos2idx(pos, scr)
     return v
 end
 
---select : helper function chooses the first non-nil argument
+--- select : helper function chooses the first non-nil argument
 --@param args - table of arguments
 function select(args)
     for i, a in pairs(args) do
@@ -176,8 +176,7 @@ function select(args)
     end
 end
 
---tagtoscr : move an entire tag to another screen
---
+--- tagtoscr : move an entire tag to another screen
 --@param scr : the screen to move tag to
 --@param t : the tag to be moved [awful.tag.selected()]
 --@return the tag
@@ -201,7 +200,7 @@ function tagtoscr(scr, t)
     return otag
 end
 
---set : set a tags properties
+--- set : set a tags properties
 --@param t: the tag
 --@param args : a table of optional (?) tag properties
 --@return t - the tag object
@@ -362,7 +361,7 @@ end
 function shift_next() set(awful.tag.selected(), {rel_index = 1}) end
 function shift_prev() set(awful.tag.selected(), {rel_index = -1}) end
 
---add : adds a tag
+--- add : adds a tag
 --@param args: table of optional arguments
 function add(args)
     if not args then args = {} end
@@ -405,7 +404,7 @@ function add(args)
     return t
 end
 
---del : delete a tag
+--- del : delete a tag
 --@param tag : the tag to be deleted [current tag]
 function del(tag)
     local scr = (tag and tag.screen) or capi.mouse.screen or 1
@@ -453,7 +452,7 @@ function is_client_tagged(tag, client)
     return false
 end
 
---match : handles app->tag matching, a replacement for the manage hook in
+--- match : handles app->tag matching, a replacement for the manage hook in
 --            rc.lua
 --@param c : client to be matched
 function match(c, startup)
@@ -701,7 +700,7 @@ function match(c, startup)
 
 end
 
---sweep : hook function that marks tags as used, visited,
+--- sweep : hook function that marks tags as used, visited,
 --deserted also handles deleting used and empty tags
 function sweep()
     for s = 1, capi.screen.count() do
@@ -744,7 +743,7 @@ function sweep()
     end
 end
 
---getpos : returns a tag to match position
+--- getpos : returns a tag to match position
 -- @param pos : the index to find
 -- @return v : the tag (found or created) at position == 'pos'
 function getpos(pos, scr_arg)
@@ -803,7 +802,7 @@ function getpos(pos, scr_arg)
     return v
 end
 
---init : search shifty.config.tags for initial set of
+--- init : search shifty.config.tags for initial set of
 --tags to open
 function init()
     local numscr = capi.screen.count()
@@ -825,7 +824,7 @@ function init()
     end
 end
 
---count : utility function returns the index of a table element
+--- count : utility function returns the index of a table element
 --FIXME: this is currently used only in remove_dup, so is it really
 --necessary?
 function count(table, element)
@@ -836,7 +835,7 @@ function count(table, element)
     return v
 end
 
---remove_dup : used by shifty.completion when more than one
+--- remove_dup : used by shifty.completion when more than one
 --tag at a position exists
 function remove_dup(table)
     local v = {}
@@ -846,7 +845,7 @@ function remove_dup(table)
     return v
 end
 
---completion : prompt completion
+--- completion : prompt completion
 --
 function completion(cmd, cur_pos, ncomp, sources, matchers)
 
@@ -944,7 +943,7 @@ function completion(cmd, cur_pos, ncomp, sources, matchers)
     return matches[ncomp], cur_pos
 end
 
--- tagkeys : hook function that sets keybindings per tag
+--- tagkeys : hook function that sets keybindings per tag
 function tagkeys(s)
     local sel = awful.tag.selected(s.index)
     local keys = awful.tag.getproperty(sel, "keys") or
@@ -952,7 +951,7 @@ function tagkeys(s)
     if keys and sel.selected then capi.root.keys(keys) end
 end
 
--- squash_keys: helper function which removes duplicate
+--- squash_keys: helper function which removes duplicate
 -- keybindings by picking only the last one to be listed in keys
 -- table arg
 function squash_keys(keys)
@@ -967,7 +966,7 @@ function squash_keys(keys)
     return ret
 end
 
--- getlayout: returns a layout by name
+--- getlayout: returns a layout by name
 function getlayout(name)
     for _, layout in ipairs(config.layouts) do
         if awful.layout.getname(layout) == name then
